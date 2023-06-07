@@ -1,0 +1,110 @@
+<!-- include header -->
+<%- include('include/_header') %>
+<!-- /include header -->
+
+
+
+<section id="header">
+    <a href="#"><img src="img/logo.png" class="logo" alt=""></a>
+
+    <div>
+        <ul id="navbar">
+             
+            <li><a href="/products">Products</a></li>
+            <li><a class="active" href="/orders">Orders</a></li>
+            <li id="lg-bag"><a href="/cart"><i class="fas fa-shopping-cart"></i></a></li>
+            <a href="#" id="close"><i class="far fa-window-close"></i></a>
+        </ul>
+    </div>
+    <div id="mobile">
+        <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
+        <i id="bar" class="fas fa-outdent"></i>
+    </div>
+</section>
+
+
+
+
+<section id="page-header">
+    <h2>Fill your cart with incredible deals and unlock a world of savings!</h2>
+    <p>Save more with coupons & up to 50% off!</p>
+    
+</section>
+
+<main id="site-main">
+    <div class="container">
+         
+            
+            <table class="table">
+                <thread class="thread-dark">
+                    <tr>
+                        <th>Order Id</th>
+                        <th>Update</th>
+                        <th>Remove</th>
+                    </tr>
+                </thread>
+                <tbody id="details-table-body">
+                    <!-- Table rows will be dynamically generated here -->
+                </tbody>
+                <script>
+                    var uJSON = sessionStorage.getItem('UserSignIn');
+                    var u = JSON.parse(uJSON);
+                    fetch('http://localhost:3000/api/details/'+u.Name)
+                    .then(function(response) {
+                        if (!response.ok) {
+                        throw new Error('Request failed with status ' + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(function(details) {
+                        const tableBody = document.getElementById('details-table-body');
+
+                        details.forEach(detail => {
+                        const row = document.createElement('tr');// in 67 i send userName 
+                        row.innerHTML = `
+                            <td>${detail._id}</td>
+                            <td>
+                            <a href="/UpdateDetails?id=${detail.UserName}">
+                                <span class="text-gradient"><i class="fas fa-edit"></i></span>
+                            </a>
+                            </td>
+                            <td>
+                            <a onclick="removeFromOrders('${detail._id}')" class="btn border-shadow delete">
+                                <span class="text-gradient"><i class="fas fa-times"></i></span>
+                            </a>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                        });
+                    })
+                    .catch(function(error) {
+                        console.error(error);
+                    });
+
+
+
+                </script>
+                  
+            </table>
+         
+    </div>
+</main>
+
+
+<script src="js/script.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

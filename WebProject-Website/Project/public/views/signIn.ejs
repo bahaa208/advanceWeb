@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign In</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Sign In</h3>
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" class="form-control" id="username">
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password">
+            </div>
+            <button class="btn btn-primary" id="signInBtn">Sign In</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+      <div class="col-md-6">
+        <div id="result" class="alert alert-success d-none"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById("signInBtn").addEventListener("click", function() {
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+      var resultElement = document.getElementById("result");
+      const checkUser = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/api/Users/' + username);
+                if (response.ok) {
+                const user = await response.json();
+                     
+                    if(user.length === 0){
+                        resultElement.textContent = 'user Not Found';
+                        resultElement.classList.remove("d-none");
+                        return;
+                    }
+             
+                // Check if the entered password matches the retrieved user's password
+                if (password === user[0].pass) {
+                    // Passwords match
+                    resultElement.textContent = 'Password is correct';
+                    resultElement.classList.remove("d-none");
+                    var userToSave = {Name:user[0].userName ,pass:user[0].pass ,address:user[0].address,
+                        phoneNumber:user[0].phoneNumber};
+
+                        // Convert the object to a JSON string
+                        var uJSON = JSON.stringify(userToSave); 
+
+                        // Save the JSON string in session storage under a key 'UserSignIn'
+                        sessionStorage.setItem('UserSignIn', uJSON);
+
+
+
+
+
+
+
+                    window.location.href = "/products";
+                } else {
+                    // Passwords do not match
+                    resultElement.textContent = `Password ${password} is not correct`;
+                    resultElement.classList.remove("d-none");
+                }
+                } else {
+                    resultElement.textContent = 'user Not Found';
+                    resultElement.classList.remove("d-none");
+                }
+            } catch (error) {
+                console.error('Failed to check or save user:', error);
+            }
+            };
+            checkUser();
+
+    });
+  </script>
+</body>
+</html>

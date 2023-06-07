@@ -1,0 +1,110 @@
+<!-- include header -->
+<%- include('include/_header') %>
+<!-- /include header -->
+
+
+<section id="header">
+    <a href="#"><img src="img/logo.png" class="logo" alt=""></a>
+
+    <div>
+        <ul id="navbar">
+             
+            <li><a class="active" href="/products">Products</a></li>
+            <li><a href="/orders">Orders</a></li>
+            <li id="lg-bag"><a href="/cart"><i class="fas fa-shopping-cart"></i></a></li>
+            <a href="#" id="close"><i class="far fa-window-close"></i></a>
+        </ul>
+    </div>
+    <div id="mobile">
+        <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
+        <i id="bar" class="fas fa-outdent"></i>
+    </div>
+</section>
+
+
+    <section id="page-header" >
+        <h2>Discover unbeatable deals and save big on all your favorite products!</h2>
+        <p>Save more with coupons & up to 50% off!</p>
+        
+    </section>
+    <br>
+    <br>
+    <style>
+        .dropdown-select {
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        background-color: #f7f7f7;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        color: #333;
+        
+        }
+    </style>
+    <div style="margin-left: 90px; "><h3>Category</h3>
+        <select id="productSelect" onchange="showSelectedProduct()" class="dropdown-select">
+            <option value="All">All</option>
+            <option value="Computer">Computer</option>
+            <option value="Mouse">Mouse</option>
+            <option value="KeyBoard">KeyBoard</option>
+          </select>
+    </div>
+    
+    <div id="product1" class="section-p1">
+        <div class="pro-container" id="productScreen" >
+            <%for(var i=0;i < products.length;i++){%>
+            <div class="pro">
+                <img src="img/products/<%=products[i].ProductName%>.jpeg" alt="">
+                <div class="description">
+                    <span><%= products[i].Kind%> </span>
+                    <h5><%= products[i].ProductName%></h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>₪<%= products[i].Price%></h4>
+                </div>
+                <div id="add-to-cart">
+                    <button class="btn123" id='<%=products[i].ProductName %>' onclick="addToCart('<%=products[i].ProductName %>', '<%=products[i].Kind %>', '<%=products[i].Price %>', '1')">Add to Cart</button>
+                </div>
+            </div>
+            <%}%>
+        </div>
+        
+    </div>
+
+
+
+<!-- include footer -->
+<%- include('include/_footer') %>
+<!-- /include footer -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

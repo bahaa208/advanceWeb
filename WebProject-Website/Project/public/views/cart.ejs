@@ -1,0 +1,199 @@
+<!-- include header -->
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecommerce Project</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<!-- <%- include('include/_header') %>/include header -->
+
+<section id="header">
+    <a href="#"><img src="img/logo.png" class="logo" alt=""></a>
+
+    <div>
+        <ul id="navbar">
+             
+            <li><a href="/products">Products</a></li>
+            <li><a href="/orders">Orders</a></li>
+            <li id="lg-bag"><a class="active" href="/cart"><i class="fas fa-shopping-cart"></i></a></li>
+            <a href="#" id="close"><i class="far fa-window-close"></i></a>
+        </ul>
+    </div>
+    <div id="mobile">
+        <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
+        <i id="bar" class="fas fa-outdent"></i>
+    </div>
+</section>
+
+
+    <section id="page-header">
+        <h2>Where great finds meet great savings!</h2>
+        <p>Save more with coupons & up to 50% off!</p>
+        
+    </section>
+
+    <main id="site-main">
+        <div class="container">
+          <table id="orders-table" class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Kind</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="subtotal">
+          <h2 id="subtotal"></h2>
+        </div>
+        <div class="form">
+          <a>
+            <button type="submit" onclick="Add_details()" class="btn text-dark update">checkout</button>
+          </a>
+        </div>
+    </main>
+      
+    <script>
+        var uJSON = sessionStorage.getItem('UserSignIn');
+        var u = JSON.parse(uJSON);
+        fetch('http://localhost:3000/api/orders/'+u.Name)
+        .then(function(response) {
+            if (!response.ok) {
+            throw new Error('Request failed with status ' + response.status);
+            }
+            return response.json();
+        })
+        .then(function(orders) {
+            const tableBody = document.querySelector('#orders-table tbody');
+            const subtotalElement = document.querySelector('#subtotal');
+
+            orders.forEach(order => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><img src="img/products/${order.ProductName}.jpeg" class="img2" alt=""></td>
+                <td>${order.ProductName}</td>
+                <td>${order.Kind}</td>
+                <td>${order.Quantity}</td>
+                <td>${order.Price}</td>
+                <td>
+                <button class="btn123" onclick="removeFromCart('${order._id}')">X</button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+            });
+
+            const total = orders.reduce((acc, order) => acc + (order.Price * order.Quantity), 0);
+            subtotalElement.textContent = `Subtotal: ${total}₪`;
+        })
+        .catch(function(error) {
+            console.error(error);
+        });
+
+    </script>
+      
+
+
+  <!-- include footer -->
+
+   
+
+<footer class="section-p1">
+  <div class="col">
+      <img class="logo" src="img/logo.png" class="img2" alt="">
+      <h4>Contact</h4>
+      <p><strong>Address:</strong>kiryat shmona , hatchel street 36</p>
+      <p><strong>Phone:</strong>+972 522535115</p>
+      <p><strong>Hours:</strong>10:00 - 16:00, Sun-Thur</p>
+      <div class="follow">
+          <h4>Follow us</h4>
+          <div class="icon">
+              <i class="fab fa-facebook-f"></i>
+              <i class="fab fa-twitter"></i>
+              <i class="fab fa-instagram"></i>
+          </div>
+      </div>
+
+  </div>
+
+
+  <div class="col">
+      <h4>About</h4>
+      <a href="#">About us</a>
+      <a href="#">Delivery Information</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms & Conditions</a>
+      <a href="#">Contact Us</a>
+  </div>
+
+  <div class="col">
+      <h4>My Account</h4>
+      <a href="#">Sign In</a>
+      <a href="#">View Cart</a>
+      <a href="#">My Wishlist</a>
+      <a href="#">Track My Order</a>
+      <a href="#">Help</a>
+  </div>
+
+
+  <div class="col install">
+      <h4>Install App</h4>
+      <p>From App Store or Google Play</p>
+      <div class="row">
+          <img src="img/pay/app.jpg" alt="">
+          <img src="img/pay/play.jpg" alt="">
+      </div>
+      <p>Secured Payment Gateways</p>
+      <img src="img/pay/pay.png" alt="">
+  </div>
+
+
+  <div class="copyright">
+      <p>© 2023, Telhai - Ecommerce Project</p>
+  </div>
+
+
+
+</footer>
+
+
+
+
+
+
+<script src="js/script.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
