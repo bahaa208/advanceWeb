@@ -270,7 +270,7 @@ function showSelectedProduct(){
     
     for(let i=0;i < products_.length;i++){
         if(products_[i].Kind === "KeyBoard"){
-            productHTML =`<div class="pro">`;
+            productHTML +=`<div class="pro">`;
             productHTML+=`<img src="img/products/${products_[i].ProductName}.jpeg" alt="">
          <div class="description">
              <span>${products_[i].Kind}</span>
