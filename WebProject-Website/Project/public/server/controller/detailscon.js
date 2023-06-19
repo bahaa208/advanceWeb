@@ -65,12 +65,23 @@ exports.find=(req,res)=>{
         })
 
     }else{
-        detailsdb.find({ UserName: req.params.name }).then(details=>{
-            res.send(details)
-        })
-        .catch(Error =>{
-            res.status(500).send({message:Error.message || "Error Occurred while retriving details details"})
-        })
+        if (req.params.name){
+            detailsdb.find({ UserName: req.params.name }).then(details=>{
+                res.send(details)
+            })
+            .catch(Error =>{
+                res.status(500).send({message:Error.message || "Error Occurred while retriving details details"})
+            })
+        }
+        else{
+            detailsdb.find().then(details=>{
+                res.send(details)
+            })
+            .catch(Error =>{
+                res.status(500).send({message:Error.message || "Error Occurred while retriving details details"})
+            })
+        }
+        
     }
 
 }
@@ -84,6 +95,7 @@ exports.update=(req,res)=>{
     }
 
     const id = req.params.id;
+    console.log(id);
     detailsdb.findByIdAndUpdate(id, { Products: req.body.Products })
     .then(data =>{
         if(!data){

@@ -1,28 +1,24 @@
-const bar = document.getElementById('bar');
-const close = document.getElementById('close');
-const nav = document.getElementById('navbar');
+{const xhr1 = new XMLHttpRequest();
+xhr1.open("GET", "/api/products/", true);
+xhr1.setRequestHeader("Content-Type", "application/json");
 
-
- 
- 
-
-const xhr = new XMLHttpRequest();
-xhr.open("GET", "/api/products/", true);
-xhr.setRequestHeader("Content-Type", "application/json");
-
-xhr.onreadystatechange = function() {
-if (xhr.readyState === 4 && xhr.status === 200) {
-    var response = JSON.parse(xhr.responseText);
+xhr1.onreadystatechange = function() {
+if (xhr1.readyState === 4 && xhr1.status === 200) {
+    var response = JSON.parse(xhr1.responseText);
     // Handle the response data here
     // Save a value in session storage
-    console.log(response);
+    //console.log(response);
     sessionStorage.setItem('productsss', JSON.stringify(response));
 
     
 }
 };
 
-xhr.send();
+xhr1.send();}
+
+{const bar = document.getElementById('bar');
+const close = document.getElementById('close');
+const nav = document.getElementById('navbar');
 
 if(bar){
     bar.addEventListener('click', () => {
@@ -41,6 +37,9 @@ if(close){
 
 }
 
+ 
+ 
+}
 
 function Add_details(){
     var uJSON = sessionStorage.getItem('UserSignIn');
@@ -112,12 +111,12 @@ function removeFromCart(id){
 
 }
 
-
-function removeFromUpdateDetails(products,id,id2){
+//id == id of product ,id2 id of de
+function removeFromUpdateDetails(products,ProductName_,id2){
     
     const productsArray = products ? JSON.parse(products) : [];
      
-    const updatedProductsArray = productsArray.filter(product => product._id !== id);
+    const updatedProductsArray = productsArray.filter(product => product.ProductName !== ProductName_);
     
     const productsJson = JSON.stringify(updatedProductsArray);
     
@@ -134,10 +133,10 @@ function removeFromUpdateDetails(products,id,id2){
 
 
 
-function saveUpdatedDetails(id){
+function saveUpdatedDetails(){
 
     // Get the input data
-    const Name1 = document.getElementById('Name2').value;
+    /*const Name1 = document.getElementById('Name2').value;
     const Address1 = document.getElementById('Address2').value;
     const PhoneNumber1 = document.getElementById('PhoneNumber2').value;
     const Notice1 = document.getElementById('Notice2').value;
@@ -151,7 +150,7 @@ function saveUpdatedDetails(id){
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send("Name=" + encodeURIComponent(Name1) + "&Address=" + encodeURIComponent(Address1) + "&PhoneNumber=" + encodeURIComponent(PhoneNumber1) + "&Notice=" + encodeURIComponent(Notice1));
 
-    
+    */
     alert("Order Updated Successfuly!!");
     window.location.href = "/orders";
 }
@@ -177,128 +176,144 @@ function removeFromOrders(id){
 
 
 function showSelectedProduct(){
+   
     
-    
-  var productSelect = document.getElementById("productSelect");
-  var selectedProduct = productSelect.value;
-  var productContainer = document.getElementById("productScreen");
-  var productHTML = "";
-  var products_ = sessionStorage.getItem('productsss');
-  products_ = JSON.parse(products_);
 
-  if (selectedProduct === "All") {
-    
-    for(let i=0;i < products_.length;i++){
-        productHTML +=`<div class="pro">`;
-         productHTML+=`<img src="img/products/${products_[i].ProductName}.jpeg" alt="">
-         <div class="description">
-             <span>${products_[i].Kind}</span>
-             <h5>${products_[i].ProductName}</h5>
-             <div class="star">
-                 <i class="fas fa-star"></i>
-                 <i class="fas fa-star"></i>
-                 <i class="fas fa-star"></i>
-                 <i class="fas fa-star"></i>
-                 <i class="fas fa-star"></i>
-             </div>
-             <h4>₪${products_[i].Price}</h4>
-         </div>
-         <div id="add-to-cart">
-             <button class="btn123" id='${products_[i].ProductName}' onclick="addToCart('${products_[i].ProductName}', '${products_[i].Kind}', '${products_[i].Price}', '1')">Add to Cart</button>
-         </div>`;
-         productHTML+=`</div>`;
-    }
-    
-    productContainer.innerHTML = productHTML;
-    
-  } else if (selectedProduct === "Computer") {
-    
-    for(let i=0;i < products_.length;i++){
+    var productSelect = document.getElementById("productSelect");
+    var selectedProduct = productSelect.value;
+    var productContainer = document.getElementById("productScreen");
+    var productHTML = "";
+    var products_ = sessionStorage.getItem('productsss');
+    products_ = JSON.parse(products_);
+
+    if (selectedProduct === "All") {
         
-        if(products_[i].Kind!=="Mouse" && products_[i].Kind!=="KeyBoard"){
+        for(let i=0;i < products_.length;i++){
             productHTML +=`<div class="pro">`;
             productHTML+=`<img src="img/products/${products_[i].ProductName}.jpeg" alt="">
-         <div class="description">
-             <span>${products_[i].Kind}</span>
-             <h5>${products_[i].ProductName}</h5>
-             <div class="star">
-                 <i class="fas fa-star"></i>
-                 <i class="fas fa-star"></i>
-                 <i class="fas fa-star"></i>
-                 <i class="fas fa-star"></i>
-                 <i class="fas fa-star"></i>
-             </div>
-             <h4>₪${products_[i].Price}</h4>
-         </div>
-         <div id="add-to-cart">
-             <button class="btn123" id='${products_[i].ProductName}' onclick="addToCart('${products_[i].ProductName}', '${products_[i].Kind}', '${products_[i].Price}', '1')">Add to Cart</button>
-         </div>`;
-         productHTML+=`</div>`;
+            <div class="description">
+                <span>${products_[i].Kind}</span>
+                <h5>${products_[i].ProductName}</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>₪${products_[i].Price}</h4>
+            </div>
+            <div id="add-to-cart">
+                <button class="btn123" id='${products_[i].ProductName}' onclick="addToCart('${products_[i].ProductName}', '${products_[i].Kind}', '${products_[i].Price}', '1')">Add to Cart</button>
+            </div>`;
+            productHTML+=`</div>`;
         }
-         
-    }
-    
-    productContainer.innerHTML = productHTML;
-  } else if (selectedProduct === "Mouse") {
-    
-    for(let i=0;i < products_.length;i++){
-        if(products_[i].Kind==="Mouse"){
-            productHTML +=`<div class="pro">`;
-            productHTML+=`<img src="img/products/${products_[i].ProductName}.jpeg" alt="">
-         <div class="description">
-             <span>${products_[i].Kind}</span>
-             <h5>${products_[i].ProductName}</h5>
-             <div class="star">
-                 <i class="fas fa-star"></i>
-                 <i class="fas fa-star"></i>
-                 <i class="fas fa-star"></i>
-                 <i class="fas fa-star"></i>
-                 <i class="fas fa-star"></i>
-             </div>
-             <h4>₪${products_[i].Price}</h4>
-         </div>
-         <div >
-             <button class="btn123" id="${products_[i].ProductName}" onclick="addToCart('${products_[i].ProductName}', '${products_[i].Kind}', '${products_[i].Price}', '1')">Add to Cart</button>
-         </div>`;
-         productHTML+=`</div>`;
+        
+        productContainer.innerHTML = productHTML;
+        
+    } else if (selectedProduct === "Computer") {
+        
+        for(let i=0;i < products_.length;i++){
+            
+            if(products_[i].Kind!=="Mouse" && products_[i].Kind!=="KeyBoard"){
+                productHTML +=`<div class="pro">`;
+                productHTML+=`<img src="img/products/${products_[i].ProductName}.jpeg" alt="">
+            <div class="description">
+                <span>${products_[i].Kind}</span>
+                <h5>${products_[i].ProductName}</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>₪${products_[i].Price}</h4>
+            </div>
+            <div id="add-to-cart">
+                <button class="btn123" id='${products_[i].ProductName}' onclick="addToCart('${products_[i].ProductName}', '${products_[i].Kind}', '${products_[i].Price}', '1')">Add to Cart</button>
+            </div>`;
+            productHTML+=`</div>`;
+            }
+            
         }
-         
-    }
-    
-    productContainer.innerHTML = productHTML;
-  }else if (selectedProduct === "KeyBoard") {
-    
-    for(let i=0;i < products_.length;i++){
-        if(products_[i].Kind === "KeyBoard"){
-            productHTML +=`<div class="pro">`;
-            productHTML+=`<img src="img/products/${products_[i].ProductName}.jpeg" alt="">
-         <div class="description">
-             <span>${products_[i].Kind}</span>
-             <h5>${products_[i].ProductName}</h5>
-             <div class="star">
-                 <i class="fas fa-star"></i>
-                 <i class="fas fa-star"></i>
-                 <i class="fas fa-star"></i>
-                 <i class="fas fa-star"></i>
-                 <i class="fas fa-star"></i>
-             </div>
-             <h4>₪${products_[i].Price}</h4>
-         </div>
-         <div id="add-to-cart">
-             <button class="btn123" id='${products_[i].ProductName}' onclick="addToCart('${products_[i].ProductName}', '${products_[i].Kind}', '${products_[i].Price}', '1')">Add to Cart</button>
-         </div>`;
-         productHTML+=`</div>`;
+        
+        productContainer.innerHTML = productHTML;
+    } else if (selectedProduct === "Mouse") {
+        
+        for(let i=0;i < products_.length;i++){
+            if(products_[i].Kind==="Mouse"){
+                productHTML +=`<div class="pro">`;
+                productHTML+=`<img src="img/products/${products_[i].ProductName}.jpeg" alt="">
+            <div class="description">
+                <span>${products_[i].Kind}</span>
+                <h5>${products_[i].ProductName}</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>₪${products_[i].Price}</h4>
+            </div>
+            <div >
+                <button class="btn123" id="${products_[i].ProductName}" onclick="addToCart('${products_[i].ProductName}', '${products_[i].Kind}', '${products_[i].Price}', '1')">Add to Cart</button>
+            </div>`;
+            productHTML+=`</div>`;
+            }
+            
         }
-         
-    }
-    
-    productContainer.innerHTML = productHTML;
+        
+        productContainer.innerHTML = productHTML;
+    }else if (selectedProduct === "KeyBoard") {
+        
+        for(let i=0;i < products_.length;i++){
+            if(products_[i].Kind === "KeyBoard"){
+                productHTML +=`<div class="pro">`;
+                productHTML+=`<img src="img/products/${products_[i].ProductName}.jpeg" alt="">
+            <div class="description">
+                <span>${products_[i].Kind}</span>
+                <h5>${products_[i].ProductName}</h5>
+                <div class="star">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <h4>₪${products_[i].Price}</h4>
+            </div>
+            <div id="add-to-cart">
+                <button class="btn123" id='${products_[i].ProductName}' onclick="addToCart('${products_[i].ProductName}', '${products_[i].Kind}', '${products_[i].Price}', '1')">Add to Cart</button>
+            </div>`;
+            productHTML+=`</div>`;
+            }
+            
+        }
+        
+        productContainer.innerHTML = productHTML;
   }
 
    
 }
 
 
+{
+    var uJSON = sessionStorage.getItem('UserSignIn');
+    var u = JSON.parse(uJSON);
+    if(u.Name=="admin"){
+        var Add_Product = document.getElementById("AddP_admin");
+        Add_Product.innerHTML = `<button type="button" id="btnAddProduct" style="background-color: #4CAF50; color: white; padding: 10px 20px; font-size: 16px; border: none; border-radius: 4px; cursor: pointer;" onclick="addNewProduct()">Add Product +</button>
+        `;
+    }
+}
+
+
+function addNewProduct(){
+    window.location.href = "/addProduct";
+    ///////////////////////////////////////////////
+}
 /*
 var username = "admin";
 var password = "admin";

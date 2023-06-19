@@ -9,11 +9,11 @@ const loginn = require('../controller/login');
 const session = require('express-session');
  
 
-route.use(session({
+/*route.use(session({
     secret: 'username',
     resave: false,
     saveUninitialized: true
-}));
+}));*/
 
 
 /**
@@ -38,13 +38,7 @@ route.get('/products',services.products);
 
 route.get('/cart',services.cart);
 
-/**
- * @description for Details to buy
- * @method GET /details
- */
-
-route.get('/details',services.details);
-
+ 
 
 /**
  * @description To show the orders
@@ -57,12 +51,16 @@ route.get('/orders',services.orders);
  * @description Update order's details page 
  * @method GET /orders
  */
-route.get('/UpdateDetails',services.UpdateDetails);
+route.get('/UpdateDoneOrder',services.UpdateDetails);
 /**
  * @description Update order's details page 
  * @method GET /orders
  */
-route.get('/signUp',services.login);
+route.get('/signUp',services.login);/**
+* @description Update order's details page 
+* @method GET /orders
+*/
+route.get('/addProduct',services.newPro);
 /**
  * @description Update order's details page 
  * @method GET /orders
@@ -72,6 +70,7 @@ route.get('/signIn',services.login_signIn);
 //ORDERS API
 route.post('/api/orders',controller.create);
 route.get('/api/orders/:name',controller.find);
+route.get('/api/orders',controller.find); ////////////////////////////////
 route.put('/api/orders/:id',controller.update);
 route.delete('/api/orders/:id',controller.delete);
 
@@ -82,6 +81,7 @@ route.get('/api/products',productcon.find);
 //Details API
 route.post('/api/details',detailscon.create);
 route.get('/api/details/:name',detailscon.find);
+route.get('/api/details',detailscon.find);///////////////////////////////
 route.put('/api/details/:id',detailscon.update);
 route.delete('/api/details/:id',detailscon.delete);
 

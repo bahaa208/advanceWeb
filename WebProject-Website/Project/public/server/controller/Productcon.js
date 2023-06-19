@@ -2,6 +2,7 @@ var productdb = require('../model/productmodel');
 
 //create and save new product
 exports.create=(req,res)=>{ 
+    
     if(!req.body){
         res.status(400).send({ message : "Product details cant be empty!"});
         return;
@@ -30,6 +31,7 @@ exports.create=(req,res)=>{
 
 //retrieve and return all products or a single order
 exports.find=(req,res)=>{
+    
     if(req.query.id){
         const id = req.query.id;
         productdb.findById(id)

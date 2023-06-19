@@ -74,10 +74,14 @@ exports.find = (req, res) => {
         .catch((error) => {
           res.status(500).send({ message: error.message || "Error occurred while retrieving order details" });
         });
-    } else {
-      // Handle the case when neither id nor UserName is provided
-      res.status(400).send({ message: "Invalid request. Please provide either id or UserName." });
-    }
+    } else{
+      orderdb.find().then(order=>{
+          res.send(order)
+      })
+      .catch(Error =>{
+          res.status(500).send({message:Error.message || "Error Occurred while retriving order details"})
+      })
+  }
   };
   
 

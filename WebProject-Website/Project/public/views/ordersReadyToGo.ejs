@@ -14,6 +14,9 @@
             <li><a class="active" href="/orders">Orders</a></li>
             <li id="lg-bag"><a href="/cart"><i class="fas fa-shopping-cart"></i></a></li>
             <a href="#" id="close"><i class="far fa-window-close"></i></a>
+            <a href="/">sign Out
+                <i class="fas fa-sign-out-alt"></i>
+              </a>
         </ul>
     </div>
     <div id="mobile">
@@ -47,6 +50,9 @@
                     <!-- Table rows will be dynamically generated here -->
                 </tbody>
                 <script>
+                    function setIdDetails(i){
+                        sessionStorage.setItem('IdDetails', i);
+                    }
                     var uJSON = sessionStorage.getItem('UserSignIn');
                     var u = JSON.parse(uJSON);
                     fetch('http://localhost:3000/api/details/'+u.Name)
@@ -58,13 +64,14 @@
                     })
                     .then(function(details) {
                         const tableBody = document.getElementById('details-table-body');
-
+                        var ii=-1;
                         details.forEach(detail => {
                         const row = document.createElement('tr');// in 67 i send userName 
+                        ii+=1;
                         row.innerHTML = `
                             <td>${detail._id}</td>
                             <td>
-                            <a href="/UpdateDetails?id=${detail.UserName}">
+                            <a href="/UpdateDoneOrder?id=${detail.UserName}" onclick="setIdDetails(${ii})">
                                 <span class="text-gradient"><i class="fas fa-edit"></i></span>
                             </a>
                             </td>

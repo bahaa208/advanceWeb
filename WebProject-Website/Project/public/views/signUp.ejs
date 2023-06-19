@@ -63,10 +63,19 @@
       };
       const checkUser = async () => {
     try {
+      var exist=true;
       const response = await fetch('http://localhost:3000/api/Users/' + user.Name);
       if (response.ok) {
-        document.getElementById('emptyHelp').textContent = 'Already exists';
-      } else {
+        const user = await response.json();
+                     
+        if(user.length === 0){
+          exist=false;
+        }
+        else{
+          document.getElementById('emptyHelp').textContent = 'Already exists';
+        }
+        
+      } if(!exist) {
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "http://localhost:3000/api/Users/");
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

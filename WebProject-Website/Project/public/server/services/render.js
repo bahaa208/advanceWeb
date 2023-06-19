@@ -2,7 +2,7 @@ const axios = require('axios');
 
 
 exports.homeRoutes = (req,res)=>{
-    res.render('index');
+    res.render('mainPage');
 }
 
 exports.products = (req,res)=>{
@@ -20,7 +20,7 @@ exports.products = (req,res)=>{
 
 exports.cart = (req,res)=>{
     
-    axios.get('http://localhost:3000/api/orders/'+"admin")
+    axios.get('http://localhost:3000/api/orders')
     .then(function(response){
          
         
@@ -31,24 +31,14 @@ exports.cart = (req,res)=>{
     })
 }
 
-exports.details = (req,res)=>{
-    //make a get request to /api/orders
-    axios.get('http://localhost:3000/api/details/'+"admin")
-    .then(function(response){
-        
-        res.render('details',{details :response.data});
-    })
-    .catch(err=>{
-        res.send(err);
-    })
-}
+ 
 
 
 exports.orders = (req,res)=>{
-    axios.get('http://localhost:3000/api/details/'+"admin")
+    axios.get('http://localhost:3000/api/details')
     .then(function(response){
         
-        res.render('orders',{details :response.data});
+        res.render('ordersReadyToGo',{details :response.data});
     })
     .catch(err=>{
         res.send(err);
@@ -58,7 +48,7 @@ exports.orders = (req,res)=>{
 exports.UpdateDetails = (req,res)=>{
     axios.get('http://localhost:3000/api/details/'+req.query.id)
     .then(function(detailsdata){
-        res.render('UpdateDetails',{details :detailsdata.data });
+        res.render('UpdateDoneOrder',{details :detailsdata.data });
     })
     .catch(err=>{
         res.send(err);
@@ -81,6 +71,14 @@ exports.login_signIn = (req, res) => {
     
 
     res.render('signIn');
+
+     
+};
+
+exports.newPro = (req, res) => {
+    
+
+    res.render('addProduct');
 
      
 };

@@ -13,6 +13,9 @@
             <li><a href="/orders">Orders</a></li>
             <li id="lg-bag"><a href="/cart"><i class="fas fa-shopping-cart"></i></a></li>
             <a href="#" id="close"><i class="far fa-window-close"></i></a>
+            <a href="/">sign Out
+                <i class="fas fa-sign-out-alt"></i>
+              </a>
         </ul>
     </div>
     <div id="mobile">
@@ -40,7 +43,9 @@
         color: #333;
         
         }
+        
     </style>
+     
     <div style="margin-left: 90px; "><h3>Category</h3>
         <select id="productSelect" onchange="showSelectedProduct()" class="dropdown-select">
             <option value="All">All</option>
@@ -49,7 +54,7 @@
             <option value="KeyBoard">KeyBoard</option>
           </select>
     </div>
-    
+    <div id="AddP_admin" align="right" style="margin-right: 50px;"></div>
     <div id="product1" class="section-p1">
         <div class="pro-container" id="productScreen" >
             <%for(var i=0;i < products.length;i++){%>

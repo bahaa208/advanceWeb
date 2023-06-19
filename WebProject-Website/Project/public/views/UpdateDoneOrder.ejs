@@ -1,0 +1,145 @@
+<!-- include header -->
+<%- include('include/_DHeader') %>
+<!-- /include header -->
+
+<br></br>
+<br></br>
+<br></br>
+ 
+<br>
+<br><br>
+<main id="site-main">
+    <div class="container">
+        <form>
+            <table class="table">
+                <thread class="thread-dark">
+                    <tr>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Kind</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Remove</th>
+                    </tr>
+                </thread>
+                <tbody id="tbodyDetail"> 
+                     
+                </tbody>
+            </table>
+        </form>
+    </div>
+     
+    <div class="subtotal" id="subTot">
+        
+        
+    </div>
+    <div class="form">
+        <a onclick="saveUpdatedDetails()"><button type="submit" class="btn text-dark update"  >
+            Save
+        </button></a>
+    </div>
+</main>
+
+<script>
+
+var uJSON = sessionStorage.getItem('UserSignIn');
+var u = JSON.parse(uJSON);
+fetch('http://localhost:3000/api/details/'+u.Name)
+.then(function(response) {
+    if (!response.ok) {
+    throw new Error('Request failed with status ' + response.status);
+    }
+    return response.json();
+})
+.then(function(details) { 
+    
+function getDetailsId() {
+  var uJSON = sessionStorage.getItem('IdDetails');
+  var u = parseInt(JSON.parse(uJSON), 10);
+  return u;
+}
+
+
+var j = getDetailsId();
+
+// Get the tbody element by its ID
+const tbody = document.getElementById('tbodyDetail');
+var sb = document.getElementById('subTot');
+
+// Parse the Products array from the JSON string or initialize it as an empty array
+const productsArray = JSON.parse(details[j].Products || '[]');
+var total=0;
+// Iterate over the productsArray and create the table rows dynamically
+productsArray.forEach(function(product) {
+  // Create a new table row element
+  const row = document.createElement('tr');
+  total = total + (product.Price * product.Quantity);
+  // Create table cells for each column
+  const imageCell = document.createElement('td');
+  const productNameCell = document.createElement('td');
+  const kindCell = document.createElement('td');
+  const quantityCell = document.createElement('td');
+  const priceCell = document.createElement('td');
+  const removeCell = document.createElement('td');
+
+  // Create an image element for the product image
+  const image = document.createElement('img');
+  image.src = `img/products/${product.ProductName}.jpeg`;
+  image.alt = '';
+  image.className = 'img2';
+
+  // Set the text content for each cell
+  productNameCell.textContent = product.ProductName;
+  kindCell.textContent = product.Kind;
+  quantityCell.textContent = product.Quantity;
+  priceCell.textContent = product.Price;
+
+  // Create a delete button element and attach an onclick event handler
+  const deleteButton = document.createElement('a');
+  deleteButton.className = 'btn border-shadow delete';
+  deleteButton.onclick = function() {
+    removeFromUpdateDetails(JSON.stringify(productsArray), product.ProductName, details[j]._id);
+  };
+  const deleteIcon = document.createElement('span');
+  deleteIcon.className = 'text-gradient';
+  const deleteIconInner = document.createElement('i');
+  deleteIconInner.className = 'fas fa-times';
+  deleteIcon.appendChild(deleteIconInner);
+  deleteButton.appendChild(deleteIcon);
+
+  // Append the elements to their respective cells
+  imageCell.appendChild(image);
+  removeCell.appendChild(deleteButton);
+
+  // Append the cells to the row
+  row.appendChild(imageCell);
+  row.appendChild(productNameCell);
+  row.appendChild(kindCell);
+  row.appendChild(quantityCell);
+  row.appendChild(priceCell);
+  row.appendChild(removeCell);
+
+  // Append the row to the tbody element
+  tbody.appendChild(row);
+});
+
+
+
+sb.innerHTML = `Subtotal: ${total}`;
+
+})
+.catch(function(error) {
+    console.error(error);
+});
+
+
+
+
+
+
+
+
+
+</script>
+
+<script src="js/script.js"></script>
