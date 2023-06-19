@@ -45,7 +45,7 @@ route.get('/cart',services.cart);
  * @method GET /orders
  */
 
-route.get('/orders',services.orders);
+route.get('/ordersReadyToGo',services.orders);
 
 /**
  * @description Update order's details page 

@@ -71,7 +71,7 @@ function Add_details(){
 
     
      
-    window.location.replace("/products");
+    window.location.replace("/ordersReadyToGo");
      
      
 }
@@ -152,7 +152,7 @@ function saveUpdatedDetails(){
 
     */
     alert("Order Updated Successfuly!!");
-    window.location.href = "/orders";
+    window.location.href = "/ordersReadyToGo";
 }
 
 
@@ -312,6 +312,7 @@ function showSelectedProduct(){
 
 function addNewProduct(){
     window.location.href = "/addProduct";
+
     ///////////////////////////////////////////////
 }
 /*

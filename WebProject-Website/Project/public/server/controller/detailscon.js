@@ -16,6 +16,8 @@ exports.create=(req,res)=>{
       
         // Convert the array of objects to a JSON string
         const orderData = JSON.stringify(docs);
+        console.log(orderData+"----------------");
+        if(orderData+""==="[]"){return;}
 
         // new details
         const details = new detailsdb({
